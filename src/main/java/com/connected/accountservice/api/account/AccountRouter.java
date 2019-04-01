@@ -5,6 +5,9 @@ import io.javalin.apibuilder.ApiBuilder;
 
 public class AccountRouter {
 
+    private static final String ACCOUNT_PATH = "accounts";
+    private static final String ACCOUNT_TRANSFER_PATH = "transfer";
+
     private final Javalin app;
 
     private final AccountController accountController;
@@ -27,12 +30,12 @@ public class AccountRouter {
     }
 
     private void createAccountRoutes() {
-        ApiBuilder.path("account", () -> {
+        ApiBuilder.path(ACCOUNT_PATH, () -> {
             ApiBuilder.get(accountController::findAll);
             ApiBuilder.post(accountController::insert);
             ApiBuilder.put(accountController::update);
             ApiBuilder.delete(accountController::delete);
-            ApiBuilder.post("transfers", accountController::transferMoney);
+            ApiBuilder.post(ACCOUNT_TRANSFER_PATH, accountController::transferMoney);
         });
     }
 }
