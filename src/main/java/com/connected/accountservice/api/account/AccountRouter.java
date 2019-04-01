@@ -33,7 +33,6 @@ public class AccountRouter {
         ApiBuilder.path(ACCOUNT_PATH, () -> {
             ApiBuilder.get(accountController::findAll);
             ApiBuilder.post(accountController::insert);
-            ApiBuilder.put(accountController::update);
             ApiBuilder.delete(accountController::delete);
             ApiBuilder.post(ACCOUNT_TRANSFER_PATH, accountController::transferMoney);
         });

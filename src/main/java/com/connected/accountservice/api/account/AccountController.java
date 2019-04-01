@@ -5,11 +5,11 @@ import io.javalin.Context;
 
 class AccountController extends BaseController {
 
-    void insert(final Context context) {
+    AccountController() {
 
     }
 
-    void update(final Context context) {
+    void insert(final Context context) {
 
     }
 
