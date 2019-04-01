@@ -2,9 +2,11 @@ package com.connected.accountservice.application.service;
 
 import com.connected.accountservice.application.converter.AccountInsertConverter;
 import com.connected.accountservice.application.inputmodel.AccountInsertInputModel;
+import com.connected.accountservice.domain.querymodel.account.AccountQueryModel;
 import com.connected.accountservice.domain.validator.account.AccountInsertValidator;
 import com.connected.accountservice.infrastructure.repository.AccountRepository;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -37,4 +39,11 @@ public class AccountService {
         return accountToInsert.getId();
     }
 
+    public void delete(final UUID accountIdToDelete) {
+        accountRepository.delete(accountIdToDelete);
+    }
+
+    public List<AccountQueryModel> findAll() {
+        return accountRepository.findAll();
+    }
 }
