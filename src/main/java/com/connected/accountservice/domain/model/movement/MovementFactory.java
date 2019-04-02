@@ -11,9 +11,9 @@ public class MovementFactory {
 
     }
 
-    public static Movement createNewAccount(final BigDecimal amount,
-                                            final UUID accountId,
-                                            final MovementType movementType) {
+    public static Movement createNewMovement(final BigDecimal amount,
+                                             final UUID accountId,
+                                             final MovementType movementType) {
         final var movementId = UUID.randomUUID();
         return new Movement(movementId, amount, accountId, movementType, Boolean.FALSE);
     }

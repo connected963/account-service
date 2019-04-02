@@ -8,7 +8,7 @@ class MovementFactoryTest {
 
     @Test
     void givenMovementData_mustCreateNewMovementEquivalent() {
-        final var movementCreated = MovementFactory.createNewAccount(
+        final var movementCreated = MovementFactory.createNewMovement(
                 MovementDefaultData.amount, MovementDefaultData.accountId,
                 MovementDefaultData.movementType);
         final var movementId = movementCreated.getId();
