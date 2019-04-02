@@ -2,11 +2,13 @@ package com.connected.accountservice.application.service.account;
 
 import com.connected.accountservice.application.inputmodel.AccountInsertInputModel;
 import com.connected.accountservice.application.inputmodel.AccountInsertInputModelFactory;
+import com.connected.accountservice.application.service.movement.MovementService;
 import com.connected.accountservice.common.defaultdata.AccountDefaultData;
 import com.connected.accountservice.domain.exception.BusinessException;
 import com.connected.accountservice.domain.model.account.Account;
 import com.connected.accountservice.domain.querymodel.account.AccountQueryModelBuilder;
 import com.connected.accountservice.infrastructure.repository.account.AccountRepository;
+import com.google.common.eventbus.EventBus;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,13 +23,21 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AccountServiceTest {
 
-    private AccountRepository accountRepositoryMock;
+    private final AccountRepository accountRepositoryMock;
 
-    private AccountService accountService;
+    private final MovementService movementServiceMock;
+
+    private final EventBus eventBusMock;
+
+    private final AccountService accountService;
 
     AccountServiceTest() {
         this.accountRepositoryMock = Mockito.mock(AccountRepository.class);
-        this.accountService = new AccountService(accountRepositoryMock);
+        this.movementServiceMock = Mockito.mock(MovementService.class);
+        this.eventBusMock = Mockito.mock(EventBus.class);
+
+        this.accountService = new AccountService(accountRepositoryMock,
+                movementServiceMock, eventBusMock);
     }
 
     static List<AccountInsertInputModel> incompleteAccountInsertInputModelProvider() {
