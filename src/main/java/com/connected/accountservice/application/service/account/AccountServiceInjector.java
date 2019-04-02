@@ -14,12 +14,12 @@ public class AccountServiceInjector {
     }
 
     public static AccountService inject() {
-        return AccountServiceInstance.ACCOUNT_CONTROLLER_INSTANCE;
+        return AccountServiceInstance.ACCOUNT_SERVICE_INSTANCE;
     }
 
     private static class AccountServiceInstance {
         //TODO replace with some implementation
-        private static final AccountService ACCOUNT_CONTROLLER_INSTANCE =
+        private static final AccountService ACCOUNT_SERVICE_INSTANCE =
                 new AccountService(new AccountRepository() {
                     @Override
                     public void insert(Account accountToInsert) {
@@ -37,5 +37,4 @@ public class AccountServiceInjector {
                     }
                 });
     }
-
 }

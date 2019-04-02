@@ -1,6 +1,5 @@
-package com.connected.accountservice.application.service;
+package com.connected.accountservice.application.service.account;
 
-import com.connected.accountservice.application.service.account.AccountServiceInjector;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
