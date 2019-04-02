@@ -2,9 +2,12 @@ package com.connected.accountservice.application.service.account;
 
 import com.connected.accountservice.application.converter.AccountInsertConverter;
 import com.connected.accountservice.application.inputmodel.AccountInsertInputModel;
+import com.connected.accountservice.application.inputmodel.AccountMoneyTransferInputModel;
+import com.connected.accountservice.application.service.movement.MovementService;
 import com.connected.accountservice.domain.querymodel.account.AccountQueryModel;
 import com.connected.accountservice.domain.validator.account.AccountInsertValidator;
 import com.connected.accountservice.infrastructure.repository.account.AccountRepository;
+import com.google.common.eventbus.EventBus;
 
 import java.util.List;
 import java.util.Objects;
@@ -17,8 +20,16 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
 
-    AccountService(final AccountRepository accountRepository) {
+    private final MovementService movementService;
+
+    private final EventBus eventBus;
+
+    AccountService(final AccountRepository accountRepository,
+                   final MovementService movementService,
+                   final EventBus eventBus) {
         this.accountRepository = accountRepository;
+        this.movementService = movementService;
+        this.eventBus = eventBus;
     }
 
     public UUID insert(final AccountInsertInputModel accountInsertInputModel) {
@@ -45,5 +56,9 @@ public class AccountService {
 
     public List<AccountQueryModel> findAll() {
         return accountRepository.findAll();
+    }
+
+    public void transferMoney(final AccountMoneyTransferInputModel moneyTransferInputModel) {
+
     }
 }

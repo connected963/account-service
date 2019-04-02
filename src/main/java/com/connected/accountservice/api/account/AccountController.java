@@ -2,6 +2,7 @@ package com.connected.accountservice.api.account;
 
 import com.connected.accountservice.api.common.BaseController;
 import com.connected.accountservice.application.inputmodel.AccountInsertInputModel;
+import com.connected.accountservice.application.inputmodel.AccountMoneyTransferInputModel;
 import com.connected.accountservice.application.service.account.AccountService;
 import io.javalin.Context;
 
@@ -35,7 +36,10 @@ class AccountController extends BaseController {
     }
 
     void transferMoney(final Context context) {
+        final var moneyTransferInputModel =
+                context.bodyAsClass(AccountMoneyTransferInputModel.class);
 
+        accountService.transferMoney(moneyTransferInputModel);
     }
 
 }

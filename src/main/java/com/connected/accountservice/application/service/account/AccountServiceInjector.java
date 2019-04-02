@@ -1,5 +1,7 @@
 package com.connected.accountservice.application.service.account;
 
+import com.connected.accountservice.application.service.movement.MovementServiceInjector;
+import com.connected.accountservice.domain.eventbus.EventBusInjector;
 import com.connected.accountservice.domain.model.account.Account;
 import com.connected.accountservice.domain.querymodel.account.AccountQueryModel;
 import com.connected.accountservice.infrastructure.repository.account.AccountRepository;
@@ -20,21 +22,33 @@ public class AccountServiceInjector {
     private static class AccountServiceInstance {
         //TODO replace with some implementation
         private static final AccountService ACCOUNT_SERVICE_INSTANCE =
-                new AccountService(new AccountRepository() {
-                    @Override
-                    public void insert(Account accountToInsert) {
+                createInstance();
 
-                    }
+        private static AccountService createInstance() {
+            final var accountRepository = getAccountRepository();
+            final var movementService = MovementServiceInjector.inject();
+            final var eventBus = EventBusInjector.inject();
 
-                    @Override
-                    public void delete(UUID accountIdToDelete) {
+            return new AccountService(accountRepository, movementService, eventBus);
+        }
 
-                    }
+        private static AccountRepository getAccountRepository() {
+            return new AccountRepository() {
+                @Override
+                public void insert(Account accountToInsert) {
 
-                    @Override
-                    public List<AccountQueryModel> findAll() {
-                        return null;
-                    }
-                });
+                }
+
+                @Override
+                public void delete(UUID accountIdToDelete) {
+
+                }
+
+                @Override
+                public List<AccountQueryModel> findAll() {
+                    return null;
+                }
+            };
+        }
     }
 }
