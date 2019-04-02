@@ -1,10 +1,10 @@
-package com.connected.accountservice.application.service;
+package com.connected.accountservice.application.service.account;
 
 import com.connected.accountservice.application.converter.AccountInsertConverter;
 import com.connected.accountservice.application.inputmodel.AccountInsertInputModel;
 import com.connected.accountservice.domain.querymodel.account.AccountQueryModel;
 import com.connected.accountservice.domain.validator.account.AccountInsertValidator;
-import com.connected.accountservice.infrastructure.repository.AccountRepository;
+import com.connected.accountservice.infrastructure.repository.account.AccountRepository;
 
 import java.util.List;
 import java.util.Objects;

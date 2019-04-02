@@ -1,6 +1,6 @@
 package com.connected.accountservice.api.account;
 
-import com.connected.accountservice.application.service.AccountServiceInjector;
+import com.connected.accountservice.application.service.account.AccountServiceInjector;
 
 class AccountControllerInjector {
 

@@ -1,4 +1,4 @@
-package com.connected.accountservice.application.service;
+package com.connected.accountservice.application.service.account;
 
 import com.connected.accountservice.application.inputmodel.AccountInsertInputModel;
 import com.connected.accountservice.application.inputmodel.AccountInsertInputModelFactory;
@@ -6,7 +6,7 @@ import com.connected.accountservice.common.defaultdata.AccountDefaultData;
 import com.connected.accountservice.domain.exception.BusinessException;
 import com.connected.accountservice.domain.model.account.Account;
 import com.connected.accountservice.domain.querymodel.account.AccountQueryModelBuilder;
-import com.connected.accountservice.infrastructure.repository.AccountRepository;
+import com.connected.accountservice.infrastructure.repository.account.AccountRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,9 +32,7 @@ class AccountServiceTest {
 
     static List<AccountInsertInputModel> incompleteAccountInsertInputModelProvider() {
         return List.of(
-                AccountInsertInputModelFactory.createAnDefaultWithoutBalance(),
                 AccountInsertInputModelFactory.createAnDefaultWithoutOverdraft(),
-                AccountInsertInputModelFactory.createAnDefaultWithBalance(BigDecimal.valueOf(-1)),
                 AccountInsertInputModelFactory.createAnDefaultWithOverdraft(BigDecimal.valueOf(-1))
         );
     }

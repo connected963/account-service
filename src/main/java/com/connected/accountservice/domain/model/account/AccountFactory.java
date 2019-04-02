@@ -9,9 +9,8 @@ public class AccountFactory {
 
     }
 
-    public static Account createNewAccount(final BigDecimal balance,
-                                           final BigDecimal overdraft) {
+    public static Account createNewAccount(final BigDecimal overdraft) {
         final var accountId = UUID.randomUUID();
-        return new Account(accountId, balance, overdraft);
+        return new Account(accountId, BigDecimal.ZERO, overdraft);
     }
 }

@@ -1,4 +1,4 @@
-package com.connected.accountservice.infrastructure.repository;
+package com.connected.accountservice.infrastructure.repository.account;
 
 import com.connected.accountservice.domain.model.account.Account;
 import com.connected.accountservice.domain.querymodel.account.AccountQueryModel;

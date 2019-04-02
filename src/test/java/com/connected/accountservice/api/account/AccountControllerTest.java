@@ -1,6 +1,6 @@
 package com.connected.accountservice.api.account;
 
-import com.connected.accountservice.application.service.AccountService;
+import com.connected.accountservice.application.service.account.AccountService;
 import io.javalin.Context;
 import org.mockito.Mockito;
 

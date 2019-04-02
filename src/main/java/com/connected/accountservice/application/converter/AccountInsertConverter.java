@@ -11,7 +11,6 @@ public class AccountInsertConverter {
 
     public static Account convertToDomainObject(
             final AccountInsertInputModel accountInsertInputModel) {
-        return AccountFactory.createNewAccount(accountInsertInputModel.getBalance(),
-                accountInsertInputModel.getOverdraft());
+        return AccountFactory.createNewAccount(accountInsertInputModel.getOverdraft());
     }
 }

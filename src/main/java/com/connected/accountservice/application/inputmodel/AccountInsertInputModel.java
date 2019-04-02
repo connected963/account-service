@@ -6,13 +6,9 @@ import java.util.StringJoiner;
 
 public class AccountInsertInputModel {
 
-    private final BigDecimal balance;
-
     private final BigDecimal overdraft;
 
-    AccountInsertInputModel(final BigDecimal balance,
-                            final BigDecimal overdraft) {
-        this.balance = balance;
+    AccountInsertInputModel(final BigDecimal overdraft) {
         this.overdraft = overdraft;
     }
 
@@ -21,17 +17,12 @@ public class AccountInsertInputModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AccountInsertInputModel that = (AccountInsertInputModel) o;
-        return Objects.equals(balance, that.balance) &&
-                Objects.equals(overdraft, that.overdraft);
+        return Objects.equals(overdraft, that.overdraft);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(balance, overdraft);
-    }
-
-    public BigDecimal getBalance() {
-        return balance;
+        return Objects.hash(overdraft);
     }
 
     public BigDecimal getOverdraft() {
@@ -41,7 +32,6 @@ public class AccountInsertInputModel {
     @Override
     public String toString() {
         return new StringJoiner(", ", AccountInsertInputModel.class.getSimpleName() + "[", "]")
-                .add("balance=" + balance)
                 .add("overdraft=" + overdraft)
                 .toString();
     }
