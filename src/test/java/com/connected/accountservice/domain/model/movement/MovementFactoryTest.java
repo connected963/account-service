@@ -18,7 +18,7 @@ class MovementFactoryTest {
                 .withAmount(MovementDefaultData.amount)
                 .withAccountId(MovementDefaultData.accountId)
                 .withMovementType(MovementDefaultData.movementType)
-                .withAborted(MovementDefaultData.aborted)
+                .withStatus(MovementDefaultData.status)
                 .build();
 
         Assertions.assertThat(movementCreated).isEqualTo(movementExpected);

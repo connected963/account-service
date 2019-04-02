@@ -35,25 +35,25 @@ class MovementServiceTest {
                         .withAmount(MovementDefaultData.amount)
                         .withAccountId(MovementDefaultData.accountId)
                         .withMovementType(MovementDefaultData.movementType)
-                        .withAborted(MovementDefaultData.aborted)
+                        .withStatus(MovementDefaultData.status)
                         .build(),
                 new MovementBuilder()
                         .withId(MovementDefaultData.id)
                         .withAccountId(MovementDefaultData.accountId)
                         .withMovementType(MovementDefaultData.movementType)
-                        .withAborted(MovementDefaultData.aborted)
+                        .withStatus(MovementDefaultData.status)
                         .build(),
                 new MovementBuilder()
                         .withId(MovementDefaultData.id)
                         .withAmount(MovementDefaultData.amount)
                         .withMovementType(MovementDefaultData.movementType)
-                        .withAborted(MovementDefaultData.aborted)
+                        .withStatus(MovementDefaultData.status)
                         .build(),
                 new MovementBuilder()
                         .withId(MovementDefaultData.id)
                         .withAmount(MovementDefaultData.amount)
                         .withAccountId(MovementDefaultData.accountId)
-                        .withAborted(MovementDefaultData.aborted)
+                        .withStatus(MovementDefaultData.status)
                         .build(),
                 new MovementBuilder()
                         .withId(MovementDefaultData.id)
@@ -66,7 +66,7 @@ class MovementServiceTest {
                         .withAmount(BigDecimal.valueOf(-1))
                         .withAccountId(MovementDefaultData.accountId)
                         .withMovementType(MovementDefaultData.movementType)
-                        .withAborted(MovementDefaultData.aborted)
+                        .withStatus(MovementDefaultData.status)
                         .build()
         );
     }

@@ -1,5 +1,6 @@
 package com.connected.accountservice.domain.validator.movement;
 
+import com.connected.accountservice.domain.enums.MovementStatus;
 import com.connected.accountservice.domain.enums.MovementType;
 import com.connected.accountservice.domain.exception.BusinessException;
 import com.connected.accountservice.domain.model.movement.Movement;
@@ -19,7 +20,7 @@ public class MovementPersistValidator implements Validator<Movement> {
             String.format("Amount cannot be less than or equals to %f", AMOUNT_MIN_VALUE);
     private static final String MOVEMENT_WITH_ACCOUNT_ID_NULL = "Account id cannot be null";
     private static final String MOVEMENT_WITH_MOVEMENT_TYPE_NULL = "MovementType cannot be null";
-    private static final String MOVEMENT_WITH_ABORTED_NULL = "Aborted cannot be null";
+    private static final String MOVEMENT_WITH_STATUS_NULL = "Status cannot be null";
 
 
     @Override
@@ -28,7 +29,7 @@ public class MovementPersistValidator implements Validator<Movement> {
         validateAmount(movement.getAmount());
         validateAccountId(movement.getAccountId());
         validateMovementType(movement.getMovementType());
-        validateAborted(movement.getAborted());
+        validateStatus(movement.getStatus());
     }
 
     private void validateId(final UUID movementId) {
@@ -66,9 +67,9 @@ public class MovementPersistValidator implements Validator<Movement> {
         }
     }
 
-    private void validateAborted(final Boolean aborted) {
-        if (Objects.isNull(aborted)) {
-            throw new BusinessException(MOVEMENT_WITH_ABORTED_NULL);
+    private void validateStatus(final MovementStatus status) {
+        if (Objects.isNull(status)) {
+            throw new BusinessException(MOVEMENT_WITH_STATUS_NULL);
         }
     }
 }

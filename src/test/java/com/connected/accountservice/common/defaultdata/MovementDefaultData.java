@@ -1,5 +1,6 @@
 package com.connected.accountservice.common.defaultdata;
 
+import com.connected.accountservice.domain.enums.MovementStatus;
 import com.connected.accountservice.domain.enums.MovementType;
 
 import java.math.BigDecimal;
@@ -15,7 +16,7 @@ public class MovementDefaultData {
 
     public static final MovementType movementType = MovementType.INPUT;
 
-    public static final Boolean aborted = false;
+    public static final MovementStatus status = MovementStatus.AWAITING_PROCESSING;
 
     private MovementDefaultData() {
     }

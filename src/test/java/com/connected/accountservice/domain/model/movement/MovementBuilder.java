@@ -1,5 +1,6 @@
 package com.connected.accountservice.domain.model.movement;
 
+import com.connected.accountservice.domain.enums.MovementStatus;
 import com.connected.accountservice.domain.enums.MovementType;
 
 import java.math.BigDecimal;
@@ -15,7 +16,7 @@ public class MovementBuilder {
 
     private MovementType movementType;
 
-    private Boolean aborted;
+    private MovementStatus status;
 
     public MovementBuilder() {
     }
@@ -40,12 +41,12 @@ public class MovementBuilder {
         return this;
     }
 
-    public MovementBuilder withAborted(final Boolean aborted) {
-        this.aborted = aborted;
+    public MovementBuilder withStatus(final MovementStatus status) {
+        this.status = status;
         return this;
     }
 
     public Movement build() {
-        return new Movement(id, amount, accountId, movementType, aborted);
+        return new Movement(id, amount, accountId, movementType, status);
     }
 }

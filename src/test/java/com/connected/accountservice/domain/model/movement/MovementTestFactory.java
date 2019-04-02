@@ -14,7 +14,7 @@ public class MovementTestFactory {
                 .withAmount(MovementDefaultData.amount)
                 .withAccountId(MovementDefaultData.accountId)
                 .withMovementType(MovementDefaultData.movementType)
-                .withAborted(MovementDefaultData.aborted)
+                .withStatus(MovementDefaultData.status)
                 .build();
     }
 

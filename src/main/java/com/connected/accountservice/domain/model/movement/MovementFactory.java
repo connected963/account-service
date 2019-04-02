@@ -1,5 +1,6 @@
 package com.connected.accountservice.domain.model.movement;
 
+import com.connected.accountservice.domain.enums.MovementStatus;
 import com.connected.accountservice.domain.enums.MovementType;
 
 import java.math.BigDecimal;
@@ -15,7 +16,8 @@ public class MovementFactory {
                                              final UUID accountId,
                                              final MovementType movementType) {
         final var movementId = UUID.randomUUID();
-        return new Movement(movementId, amount, accountId, movementType, Boolean.FALSE);
+        return new Movement(movementId, amount, accountId,
+                movementType, MovementStatus.AWAITING_PROCESSING);
     }
 
 }

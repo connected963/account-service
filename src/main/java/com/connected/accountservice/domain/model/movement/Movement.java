@@ -1,5 +1,6 @@
 package com.connected.accountservice.domain.model.movement;
 
+import com.connected.accountservice.domain.enums.MovementStatus;
 import com.connected.accountservice.domain.enums.MovementType;
 
 import java.math.BigDecimal;
@@ -17,16 +18,16 @@ public class Movement {
 
     private final MovementType movementType;
 
-    private final Boolean aborted;
+    private final MovementStatus status;
 
     Movement(final UUID id, final BigDecimal amount,
                     final UUID accountId, final MovementType movementType,
-                    final Boolean aborted) {
+                    final MovementStatus status) {
         this.id = id;
         this.amount = amount;
         this.accountId = accountId;
         this.movementType = movementType;
-        this.aborted = aborted;
+        this.status = status;
     }
 
     @Override
@@ -38,12 +39,12 @@ public class Movement {
                 Objects.equals(amount, movement.amount) &&
                 Objects.equals(accountId, movement.accountId) &&
                 movementType == movement.movementType &&
-                Objects.equals(aborted, movement.aborted);
+                status == movement.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, amount, accountId, movementType, aborted);
+        return Objects.hash(id, amount, accountId, movementType, status);
     }
 
     public UUID getId() {
@@ -62,8 +63,8 @@ public class Movement {
         return movementType;
     }
 
-    public Boolean getAborted() {
-        return aborted;
+    public MovementStatus getStatus() {
+        return status;
     }
 
     @Override
@@ -73,7 +74,7 @@ public class Movement {
                 .add("amount=" + amount)
                 .add("accountId=" + accountId)
                 .add("movementType=" + movementType)
-                .add("aborted=" + aborted)
+                .add("status=" + status)
                 .toString();
     }
 }
