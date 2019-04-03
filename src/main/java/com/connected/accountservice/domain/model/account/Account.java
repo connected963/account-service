@@ -13,6 +13,9 @@ public class Account {
     private static final String BALANCE_LESS_THAN_AMOUNT_AVAILABLE =
             "New balance cannot be less than amount available";
 
+    private static final String REVERT_MOVEMENT_FINALIZED =
+            "Finalized movement cannot be reverted";
+
     private final UUID id;
 
     private final BigDecimal balance;
@@ -39,6 +42,21 @@ public class Account {
     @Override
     public int hashCode() {
         return Objects.hash(id, balance, overdraft);
+    }
+
+    public Account revertMovement(final Movement movementToRevert) {
+        validateMovementToRevert(movementToRevert);
+
+        final var computedValue = movementToRevert.getComputedValue();
+        final var newBalance = balance.add(computedValue.negate());
+
+        return withBalance(newBalance);
+    }
+
+    private void validateMovementToRevert(final Movement movementToRevert) {
+        if (movementToRevert.isFinalized()) {
+            throw new BusinessException(REVERT_MOVEMENT_FINALIZED);
+        }
     }
 
     public Account recalculateBalanceWithMovement(final Movement movement) {
@@ -72,5 +90,4 @@ public class Account {
                 .add("overdraft=" + overdraft)
                 .toString();
     }
-
 }

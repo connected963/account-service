@@ -4,19 +4,15 @@ import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.UUID;
 
-public class TransferPaymentApprovedEvent {
+public class CreditAmountToReceiverFailedEvent {
 
     private final UUID accountIdFrom;
 
-    private final UUID accountIdTo;
-
     private final UUID paymentMovementId;
 
-    TransferPaymentApprovedEvent(final UUID accountIdFrom,
-                                 final UUID accountIdTo,
-                                 final UUID paymentMovementId) {
+    CreditAmountToReceiverFailedEvent(final UUID accountIdFrom,
+                                      final UUID paymentMovementId) {
         this.accountIdFrom = accountIdFrom;
-        this.accountIdTo = accountIdTo;
         this.paymentMovementId = paymentMovementId;
     }
 
@@ -24,23 +20,18 @@ public class TransferPaymentApprovedEvent {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TransferPaymentApprovedEvent that = (TransferPaymentApprovedEvent) o;
+        CreditAmountToReceiverFailedEvent that = (CreditAmountToReceiverFailedEvent) o;
         return Objects.equals(accountIdFrom, that.accountIdFrom) &&
-                Objects.equals(accountIdTo, that.accountIdTo) &&
                 Objects.equals(paymentMovementId, that.paymentMovementId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountIdFrom, accountIdTo, paymentMovementId);
+        return Objects.hash(accountIdFrom, paymentMovementId);
     }
 
     public UUID getAccountIdFrom() {
         return accountIdFrom;
-    }
-
-    public UUID getAccountIdTo() {
-        return accountIdTo;
     }
 
     public UUID getPaymentMovementId() {
@@ -49,9 +40,8 @@ public class TransferPaymentApprovedEvent {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", TransferPaymentApprovedEvent.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", CreditAmountToReceiverFailedEvent.class.getSimpleName() + "[", "]")
                 .add("accountIdFrom=" + accountIdFrom)
-                .add("accountIdTo=" + accountIdTo)
                 .add("paymentMovementId=" + paymentMovementId)
                 .toString();
     }

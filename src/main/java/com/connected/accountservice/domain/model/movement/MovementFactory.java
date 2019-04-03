@@ -12,12 +12,18 @@ public class MovementFactory {
 
     }
 
-    public static Movement createNewMovement(final BigDecimal amount,
-                                             final UUID accountId,
-                                             final MovementType movementType) {
+    public static Movement createNewOutputMovement(final BigDecimal amount,
+                                                   final UUID accountId) {
         final var movementId = UUID.randomUUID();
         return new Movement(movementId, amount, accountId,
-                movementType, MovementStatus.PROCESSING);
+                MovementType.OUTPUT, MovementStatus.PROCESSING);
+    }
+
+    public static Movement createNewInputMovement(final BigDecimal amount,
+                                                  final UUID accountId) {
+        final var movementId = UUID.randomUUID();
+        return new Movement(movementId, amount, accountId,
+                MovementType.INPUT, MovementStatus.PROCESSING);
     }
 
 }

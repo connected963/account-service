@@ -81,4 +81,36 @@ class AccountTest {
         assertThrows(BusinessException.class,
                 () -> account.recalculateBalanceWithMovement(movement));
     }
+
+    @Test
+    void givenNonFinalizedOutputMovement_mustGenerateAccountWithMovementAmountAddedToBalance() {
+            final var unfinalizedOutputMovement = MovementTestFactory.createAnDefaultOutput();
+        final var account = AccountTestFactory.createAnDefault();
+
+        final var accountWithMovementAmountCredit = account.revertMovement(unfinalizedOutputMovement);
+
+        final var accountExpected = AccountTestFactory.createAnDefaultWithBalance(BigDecimal.valueOf(2));
+
+        Assertions.assertThat(accountWithMovementAmountCredit).isEqualTo(accountExpected);
+    }
+
+    @Test
+    void givenNonFinalizedInputMovement_mustGenerateAccountWithMovementAmountSubtractedFromBalance() {
+        final var unfinalizedInputMovement = MovementTestFactory.createAnDefault();
+        final var account = AccountTestFactory.createAnDefault();
+
+        final var accountWithMovementAmountCredit = account.revertMovement(unfinalizedInputMovement);
+
+        final var accountExpected = AccountTestFactory.createAnDefaultWithBalance(BigDecimal.ZERO);
+
+        Assertions.assertThat(accountWithMovementAmountCredit).isEqualTo(accountExpected);
+    }
+
+    @Test
+    void givenFinalizedMovement_mustFailToRevertMovement() {
+        final var finalizedMovement = MovementTestFactory.createAnDefaultCompleted();
+        final var account = AccountTestFactory.createAnDefault();
+
+        assertThrows(BusinessException.class, () -> account.revertMovement(finalizedMovement));
+    }
 }

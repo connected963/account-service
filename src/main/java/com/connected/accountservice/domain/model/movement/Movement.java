@@ -21,8 +21,8 @@ public class Movement {
     private final MovementStatus status;
 
     Movement(final UUID id, final BigDecimal amount,
-                    final UUID accountId, final MovementType movementType,
-                    final MovementStatus status) {
+             final UUID accountId, final MovementType movementType,
+             final MovementStatus status) {
         this.id = id;
         this.amount = amount;
         this.accountId = accountId;
@@ -47,8 +47,25 @@ public class Movement {
         return Objects.hash(id, amount, accountId, movementType, status);
     }
 
-    public BigDecimal getComputedValue() {
-        return movementType.computeValue(amount);
+        public BigDecimal getComputedValue() {
+            return movementType.computeValue(amount);
+        }
+
+    public Movement complete() {
+        return withStatus(MovementStatus.COMPLETED);
+    }
+
+    public Movement abort() {
+        return withStatus(MovementStatus.ABORTED);
+    }
+
+    private Movement withStatus(final MovementStatus newStatus) {
+        return new Movement(id, amount, accountId, getMovementType(), newStatus);
+    }
+
+    public Boolean isFinalized() {
+        return status == MovementStatus.COMPLETED ||
+                status == MovementStatus.ABORTED;
     }
 
     public UUID getId() {

@@ -5,7 +5,7 @@ import com.connected.accountservice.application.converter.MoneyTransferConverter
 import com.connected.accountservice.application.inputmodel.AccountInsertInputModel;
 import com.connected.accountservice.application.inputmodel.MoneyTransferInputModel;
 import com.connected.accountservice.application.service.movement.MovementService;
-import com.connected.accountservice.domain.event.TransferPaymentApprovedEventFactory;
+import com.connected.accountservice.domain.event.PaymentApprovedEventFactory;
 import com.connected.accountservice.domain.exception.BusinessException;
 import com.connected.accountservice.domain.model.account.Account;
 import com.connected.accountservice.domain.model.movement.Movement;
@@ -28,6 +28,7 @@ public class AccountService {
     private static final String MONEY_TRANSFER_INPUT_MODEL_NULL =
             "moneyTransferInputModel cannot be null";
     private static final String ACCOUNT_NOT_FOUND = "Account not found";
+    private static final String ACCOUNT_TO_UPDATE_NULL = "Account cannot be null";
 
 
     private final AccountRepository accountRepository;
@@ -62,6 +63,12 @@ public class AccountService {
         return accountToInsert.getId();
     }
 
+    public void update(final Account accountToUpdate) {
+        Objects.requireNonNull(accountToUpdate, ACCOUNT_TO_UPDATE_NULL);
+
+        accountRepository.update(accountToUpdate);
+    }
+
     public void delete(final UUID accountIdToDelete) {
         Objects.requireNonNull(accountIdToDelete, ACCOUNT_DELETE_ID_NULL);
         accountRepository.delete(accountIdToDelete);
@@ -94,7 +101,7 @@ public class AccountService {
                 moneyTransferInputModel);
     }
 
-    private Account findAccountById(final UUID accountId) {
+    public Account findAccountById(final UUID accountId) {
         return accountRepository.findById(accountId)
                 .orElseThrow(() -> new BusinessException(ACCOUNT_NOT_FOUND));
     }
@@ -110,7 +117,7 @@ public class AccountService {
 
     private void postPaymentApprovedEvent(final MoneyTransferInputModel moneyTransferInputModel,
                                           final Movement paymentMovement) {
-        final var paymentApprovedEvent = TransferPaymentApprovedEventFactory.createNew(
+        final var paymentApprovedEvent = PaymentApprovedEventFactory.createNew(
                 moneyTransferInputModel.getAccountIdFrom(),
                 moneyTransferInputModel.getAccountIdTo(),
                 paymentMovement.getId());

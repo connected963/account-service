@@ -6,7 +6,7 @@ import com.connected.accountservice.application.inputmodel.MoneyTransferInputMod
 import com.connected.accountservice.application.inputmodel.MoneyTransferInputModelTestFactory;
 import com.connected.accountservice.application.service.movement.MovementService;
 import com.connected.accountservice.common.defaultdata.AccountDefaultData;
-import com.connected.accountservice.domain.event.TransferPaymentApprovedEvent;
+import com.connected.accountservice.domain.event.PaymentApprovedEvent;
 import com.connected.accountservice.domain.exception.BusinessException;
 import com.connected.accountservice.domain.model.account.Account;
 import com.connected.accountservice.domain.model.account.AccountTestFactory;
@@ -81,6 +81,15 @@ class AccountServiceTest {
     }
 
     @Test
+    void givenAccount_mustUpdateAccount() {
+        final var accountToUpdate = AccountTestFactory.createAnDefault();
+
+        accountService.update(accountToUpdate);
+
+        Mockito.verify(accountRepositoryMock).update(accountToUpdate);
+    }
+
+    @Test
     void givenAccountId_mustDeleteAccount() {
         accountService.delete(AccountDefaultData.id);
 
@@ -113,7 +122,7 @@ class AccountServiceTest {
         final var accountWithBalanceExpected = accountExpected.withBalance(BigDecimal.ZERO);
         Mockito.verify(accountRepositoryMock).update(accountWithBalanceExpected);
         Mockito.verify(movementServiceMock).save(Mockito.any(Movement.class));
-        Mockito.verify(eventBusMock).post(Mockito.any(TransferPaymentApprovedEvent.class));
+        Mockito.verify(eventBusMock).post(Mockito.any(PaymentApprovedEvent.class));
     }
 
     @ParameterizedTest
@@ -129,6 +138,23 @@ class AccountServiceTest {
         final var transfer = MoneyTransferInputModelTestFactory.createAnDefault();
 
         assertThrows(BusinessException.class, () -> accountService.transferMoney(transfer));
+    }
+
+    @Test
+    void givenExistentAccountId_mustFindAccount() {
+        final var accountExpected = AccountTestFactory.createAnDefault();
+        Mockito.when(accountRepositoryMock.findById(AccountDefaultData.id))
+                .thenReturn(Optional.of(accountExpected));
+
+        final var accountFound = accountService.findAccountById(AccountDefaultData.id);
+
+        Assertions.assertThat(accountFound).isEqualTo(accountExpected);
+    }
+
+    @Test
+    void givenInexistentAccountId_mustFailFindAccount() {
+        assertThrows(BusinessException.class,
+                () -> accountService.findAccountById(AccountDefaultData.id));
     }
 
 }
