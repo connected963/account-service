@@ -1,11 +1,17 @@
 package com.connected.accountservice.application.service.account;
 
 import com.connected.accountservice.application.converter.AccountInsertConverter;
+import com.connected.accountservice.application.converter.MoneyTransferConverter;
 import com.connected.accountservice.application.inputmodel.AccountInsertInputModel;
-import com.connected.accountservice.application.inputmodel.AccountMoneyTransferInputModel;
+import com.connected.accountservice.application.inputmodel.MoneyTransferInputModel;
 import com.connected.accountservice.application.service.movement.MovementService;
+import com.connected.accountservice.domain.event.TransferPaymentApprovedEventFactory;
+import com.connected.accountservice.domain.exception.BusinessException;
+import com.connected.accountservice.domain.model.account.Account;
+import com.connected.accountservice.domain.model.movement.Movement;
 import com.connected.accountservice.domain.querymodel.account.AccountQueryModel;
 import com.connected.accountservice.domain.validator.account.AccountInsertValidator;
+import com.connected.accountservice.domain.validator.account.MoneyTransferValidator;
 import com.connected.accountservice.infrastructure.repository.account.AccountRepository;
 import com.google.common.eventbus.EventBus;
 
@@ -17,6 +23,12 @@ public class AccountService {
 
     private static final String ACCOUNT_INSERT_INPUT_MODEL_NULL =
             "accountInsertInputModel cannot be null";
+    private static final String ACCOUNT_DELETE_ID_NULL =
+            "accountIdToDelete cannot be null";
+    private static final String MONEY_TRANSFER_INPUT_MODEL_NULL =
+            "moneyTransferInputModel cannot be null";
+    private static final String ACCOUNT_NOT_FOUND = "Account not found";
+
 
     private final AccountRepository accountRepository;
 
@@ -51,6 +63,7 @@ public class AccountService {
     }
 
     public void delete(final UUID accountIdToDelete) {
+        Objects.requireNonNull(accountIdToDelete, ACCOUNT_DELETE_ID_NULL);
         accountRepository.delete(accountIdToDelete);
     }
 
@@ -58,7 +71,50 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
-    public void transferMoney(final AccountMoneyTransferInputModel moneyTransferInputModel) {
+    public void transferMoney(final MoneyTransferInputModel moneyTransferInputModel) {
+        Objects.requireNonNull(moneyTransferInputModel, MONEY_TRANSFER_INPUT_MODEL_NULL);
 
+        final var validator = new MoneyTransferValidator();
+        validator.validate(moneyTransferInputModel);
+
+        payTransfer(moneyTransferInputModel);
+    }
+
+    private void payTransfer(final MoneyTransferInputModel moneyTransferInputModel) {
+        final var paymentMovement = generatePaymentMovement(moneyTransferInputModel);
+        final var accountPayerId = moneyTransferInputModel.getAccountIdFrom();
+        final var accountPayer = findAccountById(accountPayerId);
+
+        updateAccountBalanceWithPayment(paymentMovement, accountPayer);
+        postPaymentApprovedEvent(moneyTransferInputModel, paymentMovement);
+    }
+
+    private Movement generatePaymentMovement(final MoneyTransferInputModel moneyTransferInputModel) {
+        return MoneyTransferConverter.convertToAccountFromOutputMovement(
+                moneyTransferInputModel);
+    }
+
+    private Account findAccountById(final UUID accountId) {
+        return accountRepository.findById(accountId)
+                .orElseThrow(() -> new BusinessException(ACCOUNT_NOT_FOUND));
+    }
+
+    private void updateAccountBalanceWithPayment(final Movement paymentMovement,
+                                                 final Account accountPayer) {
+        final var accountWithUpdatedBalance =
+                accountPayer.recalculateBalanceWithMovement(paymentMovement);
+
+        accountRepository.update(accountWithUpdatedBalance);
+        movementService.save(paymentMovement);
+    }
+
+    private void postPaymentApprovedEvent(final MoneyTransferInputModel moneyTransferInputModel,
+                                          final Movement paymentMovement) {
+        final var paymentApprovedEvent = TransferPaymentApprovedEventFactory.createNew(
+                moneyTransferInputModel.getAccountIdFrom(),
+                moneyTransferInputModel.getAccountIdTo(),
+                paymentMovement.getId());
+
+        eventBus.post(paymentApprovedEvent);
     }
 }

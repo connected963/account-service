@@ -7,6 +7,7 @@ import com.connected.accountservice.domain.querymodel.account.AccountQueryModel;
 import com.connected.accountservice.infrastructure.repository.account.AccountRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class AccountServiceInjector {
@@ -47,6 +48,16 @@ public class AccountServiceInjector {
                 @Override
                 public List<AccountQueryModel> findAll() {
                     return null;
+                }
+
+                @Override
+                public void update(Account accountToUpdate) {
+
+                }
+
+                @Override
+                public Optional<Account> findById(UUID accountId) {
+                    return Optional.empty();
                 }
             };
         }

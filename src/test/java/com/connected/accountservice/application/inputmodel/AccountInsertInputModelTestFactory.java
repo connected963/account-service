@@ -4,9 +4,9 @@ import com.connected.accountservice.common.defaultdata.AccountDefaultData;
 
 import java.math.BigDecimal;
 
-public class AccountInsertInputModelFactory {
+public class AccountInsertInputModelTestFactory {
 
-    private AccountInsertInputModelFactory() {
+    private AccountInsertInputModelTestFactory() {
     }
 
     public static AccountInsertInputModel createAnDefault() {

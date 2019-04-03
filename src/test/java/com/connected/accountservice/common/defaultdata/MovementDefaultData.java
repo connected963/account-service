@@ -16,7 +16,7 @@ public class MovementDefaultData {
 
     public static final MovementType movementType = MovementType.INPUT;
 
-    public static final MovementStatus status = MovementStatus.AWAITING_PROCESSING;
+    public static final MovementStatus status = MovementStatus.PROCESSING;
 
     private MovementDefaultData() {
     }

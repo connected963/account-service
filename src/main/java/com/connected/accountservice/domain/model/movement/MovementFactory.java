@@ -17,7 +17,7 @@ public class MovementFactory {
                                              final MovementType movementType) {
         final var movementId = UUID.randomUUID();
         return new Movement(movementId, amount, accountId,
-                movementType, MovementStatus.AWAITING_PROCESSING);
+                movementType, MovementStatus.PROCESSING);
     }
 
 }

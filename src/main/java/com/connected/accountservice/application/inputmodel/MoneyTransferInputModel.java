@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.UUID;
 
-public class AccountMoneyTransferInputModel {
+public class MoneyTransferInputModel {
 
     private final UUID accountIdFrom;
 
@@ -13,9 +13,9 @@ public class AccountMoneyTransferInputModel {
 
     private final BigDecimal amount;
 
-    public AccountMoneyTransferInputModel(final UUID accountIdFrom,
-                                          final UUID accountIdTo,
-                                          final BigDecimal amount) {
+    public MoneyTransferInputModel(final UUID accountIdFrom,
+                                   final UUID accountIdTo,
+                                   final BigDecimal amount) {
         this.accountIdFrom = accountIdFrom;
         this.accountIdTo = accountIdTo;
         this.amount = amount;
@@ -25,7 +25,7 @@ public class AccountMoneyTransferInputModel {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AccountMoneyTransferInputModel that = (AccountMoneyTransferInputModel) o;
+        MoneyTransferInputModel that = (MoneyTransferInputModel) o;
         return Objects.equals(accountIdFrom, that.accountIdFrom) &&
                 Objects.equals(accountIdTo, that.accountIdTo) &&
                 Objects.equals(amount, that.amount);
@@ -50,7 +50,7 @@ public class AccountMoneyTransferInputModel {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", AccountMoneyTransferInputModel.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", MoneyTransferInputModel.class.getSimpleName() + "[", "]")
                 .add("accountIdFrom=" + accountIdFrom)
                 .add("accountIdTo=" + accountIdTo)
                 .add("amount=" + amount)

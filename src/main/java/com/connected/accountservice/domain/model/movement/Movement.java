@@ -47,6 +47,10 @@ public class Movement {
         return Objects.hash(id, amount, accountId, movementType, status);
     }
 
+    public BigDecimal getComputedValue() {
+        return movementType.computeValue(amount);
+    }
+
     public UUID getId() {
         return id;
     }

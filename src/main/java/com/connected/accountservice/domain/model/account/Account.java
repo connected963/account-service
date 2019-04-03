@@ -1,11 +1,17 @@
 package com.connected.accountservice.domain.model.account;
 
+import com.connected.accountservice.domain.exception.BusinessException;
+import com.connected.accountservice.domain.model.movement.Movement;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.UUID;
 
 public class Account {
+
+    private static final String BALANCE_LESS_THAN_AMOUNT_AVAILABLE =
+            "New balance cannot be less than amount available";
 
     private final UUID id;
 
@@ -14,7 +20,7 @@ public class Account {
     private final BigDecimal overdraft;
 
     Account(final UUID id, final BigDecimal balance,
-                    final BigDecimal overdraft) {
+            final BigDecimal overdraft) {
         this.id = id;
         this.balance = balance;
         this.overdraft = overdraft;
@@ -35,6 +41,25 @@ public class Account {
         return Objects.hash(id, balance, overdraft);
     }
 
+    public Account recalculateBalanceWithMovement(final Movement movement) {
+        final var movementComputedValue = movement.getComputedValue();
+        final var newBalance = balance.add(movementComputedValue);
+
+        return withBalance(newBalance);
+    }
+
+    public Account withBalance(final BigDecimal newBalance) {
+        if (newBalanceIsLowerAmountAvailable(newBalance)) {
+            throw new BusinessException(BALANCE_LESS_THAN_AMOUNT_AVAILABLE);
+        }
+
+        return new Account(id, newBalance, overdraft);
+    }
+
+    private Boolean newBalanceIsLowerAmountAvailable(final BigDecimal newBalance) {
+        return newBalance.compareTo(overdraft.negate()) < 0;
+    }
+
     public UUID getId() {
         return id;
     }
@@ -47,4 +72,5 @@ public class Account {
                 .add("overdraft=" + overdraft)
                 .toString();
     }
+
 }

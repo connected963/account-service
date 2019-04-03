@@ -1,18 +1,19 @@
 package com.connected.accountservice.domain.enums;
 
-import java.util.function.DoubleFunction;
+import java.math.BigDecimal;
+import java.util.function.Function;
 
 public enum MovementType {
     INPUT(inputValue -> inputValue),
-    OUTPUT(outputValue -> outputValue * -1);
+    OUTPUT(BigDecimal::negate);
 
-    private final DoubleFunction<Double> compute;
+    private final Function<BigDecimal, BigDecimal> compute;
 
-    MovementType(final DoubleFunction<Double> compute) {
+    MovementType(final Function<BigDecimal, BigDecimal> compute) {
         this.compute = compute;
     }
 
-    public Double computeValue(final Double value) {
+    public BigDecimal computeValue(final BigDecimal value) {
         return compute.apply(value);
     }
 }
