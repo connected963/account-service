@@ -10,11 +10,12 @@ import java.util.UUID;
 
 public class Application {
 
-    private final Javalin app;
+    private static final Integer APPLICATION_PORT = 8080;
 
-    private Application() {
-        this.app = Javalin.create()
-                .start(8080);
+    private Javalin app;
+
+    Application() {
+
     }
 
     public static void main(String[] args) {
@@ -23,10 +24,16 @@ public class Application {
     }
 
     private void start() {
+        createServer();
         runMigrations();
         createRoutes();
         registerCustomConverters();
         registerEventBusListeners();
+    }
+
+    private void createServer() {
+        this.app = Javalin.create()
+                .start(APPLICATION_PORT);
     }
 
     private void createRoutes() {
@@ -37,11 +44,11 @@ public class Application {
         FlywayConfig.runMigrations();
     }
 
-    private void registerCustomConverters() {
+    void registerCustomConverters() {
         JavalinValidation.register(UUID.class, UUID::fromString);
     }
 
-    private void registerEventBusListeners() {
+    void registerEventBusListeners() {
         EventBusConfiguration.registerListeners();
     }
 

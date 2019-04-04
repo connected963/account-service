@@ -1,9 +1,8 @@
 package com.connected.accountservice.infrastructure.repository;
 
-import com.connected.accountservice.infrastructure.database.DatabaseConfig;
 import com.connected.accountservice.infrastructure.database.flyway.FlywayConfig;
 import com.connected.accountservice.infrastructure.database.jdbi.JdbiInjector;
-import org.h2.tools.DeleteDbFiles;
+import com.connected.accountservice.infrastructure.database.utils.DataBaseUtils;
 import org.jdbi.v3.core.Jdbi;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -24,8 +23,7 @@ public abstract class BaseRepositoryTest {
 
     @AfterAll
     static void dropDatabase() {
-        DeleteDbFiles.execute(DatabaseConfig.DATABASE_DIRECTORY,
-                DatabaseConfig.DATABASE_NAME, Boolean.TRUE);
+        DataBaseUtils.DropDatabase();
     }
 
     @BeforeEach

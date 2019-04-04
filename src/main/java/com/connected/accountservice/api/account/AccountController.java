@@ -41,6 +41,10 @@ class AccountController extends BaseController {
         final var moneyTransferInputModel =
                 context.bodyAsClass(MoneyTransferInputModel.class);
 
+        transferMoney(moneyTransferInputModel);
+    }
+
+    void transferMoney(final MoneyTransferInputModel moneyTransferInputModel) {
         accountService.transferMoney(moneyTransferInputModel);
     }
 
