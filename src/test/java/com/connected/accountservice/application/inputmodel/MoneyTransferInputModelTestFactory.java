@@ -1,5 +1,6 @@
 package com.connected.accountservice.application.inputmodel;
 
+import com.connected.accountservice.common.BigDecimalScale;
 import com.connected.accountservice.common.defaultdata.AccountDefaultData;
 
 import java.math.BigDecimal;
@@ -15,21 +16,21 @@ public class MoneyTransferInputModelTestFactory {
         return new MoneyTransferInputModelTestBuilder()
                 .withAccountIdFrom(AccountDefaultData.id)
                 .withAccountIdTo(UUID.randomUUID())
-                .withAmount(BigDecimal.ONE)
+                .withAmount(BigDecimalScale.ONE)
                 .build();
     }
 
     public static MoneyTransferInputModel createAnDefaultWithoutAccountFrom() {
         return new MoneyTransferInputModelTestBuilder()
                 .withAccountIdTo(UUID.randomUUID())
-                .withAmount(BigDecimal.ONE)
+                .withAmount(BigDecimalScale.ONE)
                 .build();
     }
 
     public static MoneyTransferInputModel createAnDefaultWithoutAccountTo() {
         return new MoneyTransferInputModelTestBuilder()
                 .withAccountIdFrom(AccountDefaultData.id)
-                .withAmount(BigDecimal.ONE)
+                .withAmount(BigDecimalScale.ONE)
                 .build();
     }
 

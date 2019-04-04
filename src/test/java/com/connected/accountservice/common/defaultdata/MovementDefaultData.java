@@ -1,5 +1,6 @@
 package com.connected.accountservice.common.defaultdata;
 
+import com.connected.accountservice.common.BigDecimalScale;
 import com.connected.accountservice.domain.enums.MovementStatus;
 import com.connected.accountservice.domain.enums.MovementType;
 
@@ -10,7 +11,7 @@ public class MovementDefaultData {
 
     public static final UUID id = UUID.randomUUID();
 
-    public static final BigDecimal amount = BigDecimal.ONE;
+    public static final BigDecimal amount = BigDecimalScale.ONE;
 
     public static final UUID accountId = AccountDefaultData.id;
 

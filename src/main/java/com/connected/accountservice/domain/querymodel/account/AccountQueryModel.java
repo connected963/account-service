@@ -1,5 +1,6 @@
 package com.connected.accountservice.domain.querymodel.account;
 
+import java.beans.ConstructorProperties;
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -11,7 +12,8 @@ public class AccountQueryModel {
 
     private BigDecimal balance;
 
-    AccountQueryModel(final UUID id, final BigDecimal balance) {
+    @ConstructorProperties({"id", "balance"})
+    public AccountQueryModel(final UUID id, final BigDecimal balance) {
         this.id = id;
         this.balance = balance;
     }

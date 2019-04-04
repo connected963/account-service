@@ -5,6 +5,7 @@ import com.connected.accountservice.application.inputmodel.AccountInsertInputMod
 import com.connected.accountservice.application.inputmodel.MoneyTransferInputModel;
 import com.connected.accountservice.application.inputmodel.MoneyTransferInputModelTestFactory;
 import com.connected.accountservice.application.service.movement.MovementService;
+import com.connected.accountservice.common.BigDecimalScale;
 import com.connected.accountservice.common.defaultdata.AccountDefaultData;
 import com.connected.accountservice.domain.event.PaymentApprovedEvent;
 import com.connected.accountservice.domain.exception.BusinessException;
@@ -20,7 +21,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -49,7 +49,7 @@ class AccountServiceTest {
     static List<AccountInsertInputModel> incompleteAccountInsertInputModelProvider() {
         return List.of(
                 AccountInsertInputModelTestFactory.createAnDefaultWithoutOverdraft(),
-                AccountInsertInputModelTestFactory.createAnDefaultWithOverdraft(BigDecimal.valueOf(-1))
+                AccountInsertInputModelTestFactory.createAnDefaultWithOverdraft(BigDecimalScale.valueOf(-1))
         );
     }
 
@@ -58,8 +58,8 @@ class AccountServiceTest {
                 MoneyTransferInputModelTestFactory.createAnDefaultWithoutAccountFrom(),
                 MoneyTransferInputModelTestFactory.createAnDefaultWithoutAccountTo(),
                 MoneyTransferInputModelTestFactory.createAnDefaultWithoutAmount(),
-                MoneyTransferInputModelTestFactory.createAnDefaultWithAmount(BigDecimal.ZERO),
-                MoneyTransferInputModelTestFactory.createAnDefaultWithAmount(BigDecimal.ONE.negate())
+                MoneyTransferInputModelTestFactory.createAnDefaultWithAmount(BigDecimalScale.ZERO),
+                MoneyTransferInputModelTestFactory.createAnDefaultWithAmount(BigDecimalScale.ONE.negate())
         );
     }
 
@@ -102,7 +102,7 @@ class AccountServiceTest {
                 .thenReturn(List.of(
                         new AccountQueryModelBuilder()
                                 .withId(UUID.randomUUID())
-                                .withBalance(BigDecimal.ZERO)
+                                .withBalance(BigDecimalScale.ZERO)
                                 .build()
                 ));
         final var accounts = accountService.findAll();
@@ -119,7 +119,7 @@ class AccountServiceTest {
         final var transfer = MoneyTransferInputModelTestFactory.createAnDefault();
         accountService.transferMoney(transfer);
 
-        final var accountWithBalanceExpected = accountExpected.withBalance(BigDecimal.ZERO);
+        final var accountWithBalanceExpected = accountExpected.withBalance(BigDecimalScale.ZERO);
         Mockito.verify(accountRepositoryMock).update(accountWithBalanceExpected);
         Mockito.verify(movementServiceMock).insert(Mockito.any(Movement.class));
         Mockito.verify(eventBusMock).post(Mockito.any(PaymentApprovedEvent.class));

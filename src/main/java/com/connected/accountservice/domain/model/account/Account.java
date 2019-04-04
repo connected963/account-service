@@ -82,6 +82,14 @@ public class Account {
         return id;
     }
 
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public BigDecimal getOverdraft() {
+        return overdraft;
+    }
+
     @Override
     public String toString() {
         return new StringJoiner(", ", Account.class.getSimpleName() + "[", "]")

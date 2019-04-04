@@ -2,6 +2,7 @@ package com.connected.accountservice.domain.eventhandler;
 
 import com.connected.accountservice.application.service.account.AccountService;
 import com.connected.accountservice.application.service.movement.MovementService;
+import com.connected.accountservice.common.BigDecimalScale;
 import com.connected.accountservice.common.defaultdata.AccountDefaultData;
 import com.connected.accountservice.common.defaultdata.MovementDefaultData;
 import com.connected.accountservice.domain.event.CreditAmountToReceiverFailedEventFactory;
@@ -51,7 +52,7 @@ class PaymentApprovedHandlerTest {
         paymentApprovedHandler.paymentApprovedHandler(paymentApprovedEvent);
 
         final var receiverAccountWithNewBalance =
-                AccountTestFactory.createAnDefaultWithBalance(BigDecimal.valueOf(2));
+                AccountTestFactory.createAnDefaultWithBalance(BigDecimalScale.TWO);
         Mockito.verify(accountServiceMock).update(receiverAccountWithNewBalance);
         Mockito.verify(movementServiceMock).insert(Mockito.any(Movement.class));
 

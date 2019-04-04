@@ -1,5 +1,6 @@
 package com.connected.accountservice.domain.model.account;
 
+import com.connected.accountservice.common.BigDecimalScale;
 import com.connected.accountservice.domain.exception.BusinessException;
 import com.connected.accountservice.domain.model.movement.MovementTestFactory;
 import org.assertj.core.api.Assertions;
@@ -55,7 +56,7 @@ class AccountTest {
         final var accountWithBalanceRecalculated = account.recalculateBalanceWithMovement(movement);
 
         final var accountExpected =
-                AccountTestFactory.createAnDefaultWithBalance(BigDecimal.valueOf(2));
+                AccountTestFactory.createAnDefaultWithBalance(BigDecimalScale.TWO);
 
         Assertions.assertThat(accountWithBalanceRecalculated).isEqualTo(accountExpected);
     }
@@ -68,7 +69,7 @@ class AccountTest {
         final var accountWithBalanceRecalculated = account.recalculateBalanceWithMovement(movement);
 
         final var accountExpected =
-                AccountTestFactory.createAnDefaultWithBalance(BigDecimal.ZERO);
+                AccountTestFactory.createAnDefaultWithBalance(BigDecimalScale.ZERO);
 
         Assertions.assertThat(accountWithBalanceRecalculated).isEqualTo(accountExpected);
     }
@@ -84,12 +85,12 @@ class AccountTest {
 
     @Test
     void givenNonFinalizedOutputMovement_mustGenerateAccountWithMovementAmountAddedToBalance() {
-            final var unfinalizedOutputMovement = MovementTestFactory.createAnDefaultOutput();
+        final var unfinalizedOutputMovement = MovementTestFactory.createAnDefaultOutput();
         final var account = AccountTestFactory.createAnDefault();
 
         final var accountWithMovementAmountCredit = account.revertMovement(unfinalizedOutputMovement);
 
-        final var accountExpected = AccountTestFactory.createAnDefaultWithBalance(BigDecimal.valueOf(2));
+        final var accountExpected = AccountTestFactory.createAnDefaultWithBalance(BigDecimalScale.TWO);
 
         Assertions.assertThat(accountWithMovementAmountCredit).isEqualTo(accountExpected);
     }
@@ -101,7 +102,7 @@ class AccountTest {
 
         final var accountWithMovementAmountCredit = account.revertMovement(unfinalizedInputMovement);
 
-        final var accountExpected = AccountTestFactory.createAnDefaultWithBalance(BigDecimal.ZERO);
+        final var accountExpected = AccountTestFactory.createAnDefaultWithBalance(BigDecimalScale.ZERO);
 
         Assertions.assertThat(accountWithMovementAmountCredit).isEqualTo(accountExpected);
     }

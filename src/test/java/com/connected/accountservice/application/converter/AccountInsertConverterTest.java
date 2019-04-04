@@ -1,6 +1,7 @@
 package com.connected.accountservice.application.converter;
 
 import com.connected.accountservice.application.inputmodel.AccountInsertInputModelTestFactory;
+import com.connected.accountservice.common.BigDecimalScale;
 import com.connected.accountservice.common.defaultdata.AccountDefaultData;
 import com.connected.accountservice.domain.model.account.AccountBuilder;
 import org.assertj.core.api.Assertions;
@@ -20,7 +21,7 @@ class AccountInsertConverterTest {
 
         final var accountExpected = new AccountBuilder()
                 .withId(accountConverted.getId())
-                .withBalance(BigDecimal.ZERO)
+                .withBalance(BigDecimalScale.ZERO)
                 .withOverdraft(AccountDefaultData.overdraft)
                 .build();
 

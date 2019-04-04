@@ -1,10 +1,9 @@
 package com.connected.accountservice.domain.model.account;
 
+import com.connected.accountservice.common.BigDecimalScale;
 import com.connected.accountservice.common.defaultdata.AccountDefaultData;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.math.BigDecimal;
 
 class AccountFactoryTest {
 
@@ -14,9 +13,20 @@ class AccountFactoryTest {
         final var accountId = accountCreated.getId();
 
         final var accountExpected = new Account(accountId,
-                BigDecimal.ZERO, AccountDefaultData.overdraft);
+                BigDecimalScale.ZERO, AccountDefaultData.overdraft);
 
         Assertions.assertThat(accountCreated).isEqualTo(accountExpected);
         Assertions.assertThat(accountId).isNotNull();
+    }
+
+    @Test
+    void givenAccountData_mustCreateExistentAccountEquivalent() {
+        final var accountCreated = AccountFactory.createExistentAccount(AccountDefaultData.id,
+                AccountDefaultData.balance, AccountDefaultData.overdraft);
+
+        final var accountExpected = new Account(AccountDefaultData.id,
+                AccountDefaultData.balance, AccountDefaultData.overdraft);
+
+        Assertions.assertThat(accountCreated).isEqualTo(accountExpected);
     }
 }
