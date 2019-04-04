@@ -5,7 +5,11 @@ import io.javalin.apibuilder.ApiBuilder;
 
 public class AccountRouter {
 
+    static final String ACCOUNT_DELETE_PARAMETER = "id";
+
     private static final String ACCOUNT_PATH = "accounts";
+    private static final String ACCOUNT_PATH_DELETE_PARAMETER =
+            String.format(":%s", ACCOUNT_DELETE_PARAMETER);
     private static final String ACCOUNT_TRANSFER_PATH = "transfer";
 
     private final Javalin app;
@@ -33,7 +37,7 @@ public class AccountRouter {
         ApiBuilder.path(ACCOUNT_PATH, () -> {
             ApiBuilder.get(accountController::findAll);
             ApiBuilder.post(accountController::insert);
-            ApiBuilder.delete(accountController::delete);
+            ApiBuilder.delete(ACCOUNT_PATH_DELETE_PARAMETER, accountController::delete);
             ApiBuilder.post(ACCOUNT_TRANSFER_PATH, accountController::transferMoney);
         });
     }

@@ -1,8 +1,12 @@
 package com.connected.accountservice;
 
 import com.connected.accountservice.api.account.AccountRouter;
+import com.connected.accountservice.domain.eventbus.EventBusConfiguration;
 import com.connected.accountservice.infrastructure.database.flyway.FlywayConfig;
 import io.javalin.Javalin;
+import io.javalin.validation.JavalinValidation;
+
+import java.util.UUID;
 
 public class Application {
 
@@ -15,9 +19,14 @@ public class Application {
 
     public static void main(String[] args) {
         final var application = new Application();
+        application.start();
+    }
 
-        application.runMigrations();
-        application.createRoutes();
+    private void start() {
+        runMigrations();
+        createRoutes();
+        registerCustomConverters();
+        registerEventBusListeners();
     }
 
     private void createRoutes() {
@@ -26,6 +35,14 @@ public class Application {
 
     private void runMigrations() {
         FlywayConfig.runMigrations();
+    }
+
+    private void registerCustomConverters() {
+        JavalinValidation.register(UUID.class, UUID::fromString);
+    }
+
+    private void registerEventBusListeners() {
+        EventBusConfiguration.registerListeners();
     }
 
 }

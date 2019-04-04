@@ -29,7 +29,7 @@ public class PaymentApprovedHandler {
     }
 
     @Subscribe
-    public void paymentApprovedHandler(final PaymentApprovedEvent paymentApprovedEvent) {
+    void paymentApprovedHandler(final PaymentApprovedEvent paymentApprovedEvent) {
         try {
             creditAmountToReceiverAccount(paymentApprovedEvent);
         } catch (Exception e) {

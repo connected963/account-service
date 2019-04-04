@@ -1,5 +1,8 @@
 package com.connected.accountservice.application.inputmodel;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -8,7 +11,8 @@ public class AccountInsertInputModel {
 
     private final BigDecimal overdraft;
 
-    AccountInsertInputModel(final BigDecimal overdraft) {
+    @JsonCreator
+    AccountInsertInputModel(@JsonProperty("overdraft") final BigDecimal overdraft) {
         this.overdraft = overdraft;
     }
 

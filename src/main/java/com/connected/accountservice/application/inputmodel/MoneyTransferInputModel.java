@@ -1,5 +1,8 @@
 package com.connected.accountservice.application.inputmodel;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -13,9 +16,10 @@ public class MoneyTransferInputModel {
 
     private final BigDecimal amount;
 
-    public MoneyTransferInputModel(final UUID accountIdFrom,
-                                   final UUID accountIdTo,
-                                   final BigDecimal amount) {
+    @JsonCreator
+    MoneyTransferInputModel(@JsonProperty("accountIdFrom") final UUID accountIdFrom,
+                            @JsonProperty("accountIdTo") final UUID accountIdTo,
+                            @JsonProperty("amount") final BigDecimal amount) {
         this.accountIdFrom = accountIdFrom;
         this.accountIdTo = accountIdTo;
         this.amount = amount;

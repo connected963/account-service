@@ -22,7 +22,7 @@ public class CreditAmountToReceiverFailedHandler {
     }
 
     @Subscribe
-    public void abortTransferMoney(
+    void abortTransferMoney(
             final CreditAmountToReceiverFailedEvent creditAmountToReceiverFailedEvent) {
         final var payingAccount = accountService.findAccountById(
                 creditAmountToReceiverFailedEvent.getAccountIdFrom());

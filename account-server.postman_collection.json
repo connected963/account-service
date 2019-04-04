@@ -1,0 +1,119 @@
+{
+	"info": {
+		"_postman_id": "64cf8047-e6e1-4663-93ba-ee0844250b23",
+		"name": "account-server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all accounts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://127.0.0.1:8080/accounts",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create account",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"overdraft\": 500\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/accounts",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete account",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://127.0.0.1:8080/accounts/890aa27a-fb9c-4237-95d2-9c51fb2ac7fe",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"accounts",
+						"890aa27a-fb9c-4237-95d2-9c51fb2ac7fe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transfer money",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"accountIdFrom\": \"4b876f28-4851-43e2-9519-865b04998b5f\",\n\t\"accountIdTo\": \"1d7fc333-c686-4435-85d4-822ddc4fc85e\",\n\t\"amount\": 50\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/accounts/transfer",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"accounts",
+						"transfer"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

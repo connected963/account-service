@@ -24,7 +24,9 @@ class AccountController extends BaseController {
     }
 
     void delete(final Context context) {
-        final var accountIdToDelete = context.bodyAsClass(UUID.class);
+        final var accountIdToDelete = context.pathParam(
+                AccountRouter.ACCOUNT_DELETE_PARAMETER, UUID.class)
+                .get();
 
         accountService.delete(accountIdToDelete);
     }
