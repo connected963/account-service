@@ -45,6 +45,7 @@ public class PaymentApprovedHandler {
                 paymentApprovedEvent.getPaymentMovementId());
         final var receiptMovement = createReceiptMovement(receiverAccount, paymentMovement);
 
+        //TODO this must be executed in a transaction
         creditReceiptAccount(receiverAccount, receiptMovement);
         completePaymentMovement(paymentMovement);
     }

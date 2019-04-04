@@ -29,6 +29,7 @@ public class CreditAmountToReceiverFailedHandler {
         final var payingMovement = movementService.findMovementById(
                 creditAmountToReceiverFailedEvent.getPaymentMovementId());
 
+        //TODO this must be executed in a transaction
         revertAccountMovement(payingAccount, payingMovement);
         abortMovement(payingMovement);
     }

@@ -92,6 +92,7 @@ public class AccountService {
         final var accountPayerId = moneyTransferInputModel.getAccountIdFrom();
         final var accountPayer = findAccountById(accountPayerId);
 
+        //TODO this must be executed in a transaction
         updateAccountBalanceWithPayment(paymentMovement, accountPayer);
         postPaymentApprovedEvent(moneyTransferInputModel, paymentMovement);
     }
