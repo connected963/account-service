@@ -1,6 +1,7 @@
 package com.connected.accountservice;
 
 import com.connected.accountservice.api.account.AccountRouter;
+import com.connected.accountservice.infrastructure.database.flyway.FlywayConfig;
 import io.javalin.Javalin;
 
 public class Application {
@@ -13,11 +14,18 @@ public class Application {
     }
 
     public static void main(String[] args) {
-        new Application().createRoutes();
+        final var application = new Application();
+
+        application.runMigrations();
+        application.createRoutes();
     }
 
     private void createRoutes() {
         AccountRouter.createRoutes(app);
+    }
+
+    private void runMigrations() {
+        FlywayConfig.runMigrations();
     }
 
 }

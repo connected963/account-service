@@ -121,7 +121,7 @@ class AccountServiceTest {
 
         final var accountWithBalanceExpected = accountExpected.withBalance(BigDecimal.ZERO);
         Mockito.verify(accountRepositoryMock).update(accountWithBalanceExpected);
-        Mockito.verify(movementServiceMock).save(Mockito.any(Movement.class));
+        Mockito.verify(movementServiceMock).insert(Mockito.any(Movement.class));
         Mockito.verify(eventBusMock).post(Mockito.any(PaymentApprovedEvent.class));
     }
 

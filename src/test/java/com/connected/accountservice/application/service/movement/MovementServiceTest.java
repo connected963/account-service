@@ -72,18 +72,33 @@ class MovementServiceTest {
     }
 
     @Test
-    void givenValidMovement_mustPersist() {
+    void givenValidMovement_mustUpdate() {
         final var movement = MovementTestFactory.createAnDefault();
 
-        movementService.save(movement);
+        movementService.update(movement);
 
-        Mockito.verify(movementRepositoryMock).save(movement);
+        Mockito.verify(movementRepositoryMock).update(movement);
     }
 
     @ParameterizedTest
     @MethodSource("invalidMovementProvider")
-    void givenInvalidMovement_mustFailToPersist(final Movement movement) {
-        assertThrows(BusinessException.class, () -> movementService.save(movement));
+    void givenInvalidMovement_mustFailToUpdate(final Movement movement) {
+        assertThrows(BusinessException.class, () -> movementService.update(movement));
+    }
+
+    @Test
+    void givenValidMovement_mustInsert() {
+        final var movement = MovementTestFactory.createAnDefault();
+
+        movementService.insert(movement);
+
+        Mockito.verify(movementRepositoryMock).insert(movement);
+    }
+
+    @ParameterizedTest
+    @MethodSource("invalidMovementProvider")
+    void givenInvalidMovement_mustFailToInsert(final Movement movement) {
+        assertThrows(BusinessException.class, () -> movementService.insert(movement));
     }
 
     @Test

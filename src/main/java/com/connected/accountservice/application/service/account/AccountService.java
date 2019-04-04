@@ -112,7 +112,7 @@ public class AccountService {
                 accountPayer.recalculateBalanceWithMovement(paymentMovement);
 
         accountRepository.update(accountWithUpdatedBalance);
-        movementService.save(paymentMovement);
+        movementService.insert(paymentMovement);
     }
 
     private void postPaymentApprovedEvent(final MoneyTransferInputModel moneyTransferInputModel,

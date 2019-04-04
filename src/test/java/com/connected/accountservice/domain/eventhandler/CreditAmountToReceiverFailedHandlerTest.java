@@ -40,11 +40,11 @@ class CreditAmountToReceiverFailedHandlerTest {
                 AccountDefaultData.id, MovementDefaultData.id);
         creditAmountToReceiverFailedHandler.abortTransferMoney(creditAmountFailedEvent);
 
-        final var accountWithMovementRevertedExpected =
+        final var payingAccountWithMovementRevertedExpected =
                 AccountTestFactory.createAnDefaultWithBalance(BigDecimal.valueOf(2));
-        Mockito.verify(accountServiceMock).update(accountWithMovementRevertedExpected);
+        Mockito.verify(accountServiceMock).update(payingAccountWithMovementRevertedExpected);
 
-        final var movementAbortedExpected = MovementTestFactory.createAnDefaultOutputAborted();
-        Mockito.verify(movementServiceMock).save(movementAbortedExpected);
+        final var paymentMovementAbortedExpected = MovementTestFactory.createAnDefaultOutputAborted();
+        Mockito.verify(movementServiceMock).update(paymentMovementAbortedExpected);
     }
 }

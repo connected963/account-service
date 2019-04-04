@@ -53,11 +53,10 @@ class PaymentApprovedHandlerTest {
         final var receiverAccountWithNewBalance =
                 AccountTestFactory.createAnDefaultWithBalance(BigDecimal.valueOf(2));
         Mockito.verify(accountServiceMock).update(receiverAccountWithNewBalance);
+        Mockito.verify(movementServiceMock).insert(Mockito.any(Movement.class));
 
-        Mockito.verify(movementServiceMock, Mockito.atLeast(2)).save(Mockito.any(Movement.class));
-
-        final var receiverPaymentCompleted = paymentMovementExpected.complete();
-        Mockito.verify(movementServiceMock).save(receiverPaymentCompleted);
+        final var paymentMovementCompleted = paymentMovementExpected.complete();
+        Mockito.verify(movementServiceMock).update(paymentMovementCompleted);
     }
 
     @Test

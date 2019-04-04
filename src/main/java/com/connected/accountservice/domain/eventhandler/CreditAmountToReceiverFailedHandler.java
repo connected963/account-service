@@ -43,7 +43,7 @@ public class CreditAmountToReceiverFailedHandler {
     private void abortMovement(final Movement payingMovement) {
         final var abortedMovement = payingMovement.abort();
 
-        movementService.save(abortedMovement);
+        movementService.update(abortedMovement);
     }
 
     @Override

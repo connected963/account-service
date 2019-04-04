@@ -62,13 +62,13 @@ public class PaymentApprovedHandler {
         final var receiptMovementCompleted = receiptMovement.complete();
 
         accountService.update(receiverAccountRecalculated);
-        movementService.save(receiptMovementCompleted);
+        movementService.insert(receiptMovementCompleted);
     }
 
     private void completePaymentMovement(final Movement paymentMovement) {
         final var paymentMovementCompleted = paymentMovement.complete();
 
-        movementService.save(paymentMovementCompleted);
+        movementService.update(paymentMovementCompleted);
     }
 
     private void postCreditAmountToReceiverFailedEvent(
