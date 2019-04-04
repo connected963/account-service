@@ -21,7 +21,7 @@ The operation executes the following steps:
 - Start a **Payment Movement** to keep history of this transaction, with status **PROCESSING**
 - Try
     - Add informed amount on the receiver account
-    - Create a **Receipt Movement** to keep history this transaction, with status **COMPLETED**
+    - Create a **Receipt Movement** to keep history of this transaction, with status **COMPLETED**
     - Finalizes the **Payment Movement** created before, with status **COMPLETED**
  - If something goes wrong
     - Revert informed amount subtraction on the payment account
@@ -51,3 +51,4 @@ A [Postman collection](account-server.postman_collection.json) was made availabl
 ### Next steps
 - Add transactions to sensitive operations
 - Refactor ```AccountInsertValidator``` to validate an ```Account``` instead of an ```AccountInsertInputModel```
+- Create an exception handler to return human-readable messages on errors
