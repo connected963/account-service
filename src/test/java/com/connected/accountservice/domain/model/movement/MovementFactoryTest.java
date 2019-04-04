@@ -43,4 +43,21 @@ class MovementFactoryTest {
         Assertions.assertThat(movementId).isNotNull();
     }
 
+    @Test
+    void givenMovementData_mustCreateExistentMovementEquivalent() {
+        final var movementCreated = MovementFactory.createExistentMovement(
+                MovementDefaultData.id, MovementDefaultData.amount, MovementDefaultData.accountId,
+                MovementDefaultData.movementType, MovementDefaultData.status);
+
+        final var movementExpected = new MovementBuilder()
+                .withId(MovementDefaultData.id)
+                .withAmount(MovementDefaultData.amount)
+                .withAccountId(MovementDefaultData.accountId)
+                .withMovementType(MovementDefaultData.movementType)
+                .withStatus(MovementDefaultData.status)
+                .build();
+
+        Assertions.assertThat(movementCreated).isEqualTo(movementExpected);
+    }
+
 }

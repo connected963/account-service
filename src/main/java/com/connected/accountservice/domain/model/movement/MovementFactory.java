@@ -26,4 +26,12 @@ public class MovementFactory {
                 MovementType.INPUT, MovementStatus.PROCESSING);
     }
 
+    public static Movement createExistentMovement(final UUID movementId,
+                                                  final BigDecimal amount,
+                                                  final UUID accountId,
+                                                  final MovementType movementType,
+                                                  final MovementStatus status) {
+        return new Movement(movementId, amount, accountId, movementType, status);
+    }
+
 }
